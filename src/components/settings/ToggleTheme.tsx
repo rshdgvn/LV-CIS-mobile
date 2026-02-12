@@ -1,4 +1,6 @@
+import { Moon, Sun } from "lucide-react-native";
 import { useColorScheme } from "nativewind";
+import React from "react";
 import { Pressable, Switch, Text, View } from "react-native";
 
 export function ToggleTheme() {
@@ -8,15 +10,22 @@ export function ToggleTheme() {
   return (
     <Pressable
       onPress={toggleColorScheme}
-      className="flex-row items-center justify-between p-4 bg-card dark:bg-dark-card rounded-xl border border-border dark:border-dark-border"
+      className="flex-row items-center justify-between p-3 rounded-2xl border border-border dark:border-dark-border bg-card dark:bg-dark-card shadow-sm active:opacity-95"
     >
-      <View>
-        <Text className="text-foreground dark:text-dark-fg font-bold text-lg">
-          {isDark ? "Dark Mode" : "Light Mode"}
-        </Text>
-        <Text className="text-muted-fg dark:text-dark-muted-fg text-sm">
-          Tap to switch themes
-        </Text>
+      <View className="flex-row items-center gap-3">
+        <View className="p-2 rounded-xl">
+          {isDark ? (
+            <Moon size={20} color="#f8f9fa" />
+          ) : (
+            <Sun size={20} color="#1c1e26" />
+          )}
+        </View>
+
+        <View>
+          <Text className="text-foreground dark:text-dark-fg font-semibold">
+            Dark Mode
+          </Text>
+        </View>
       </View>
 
       <Switch
@@ -24,6 +33,7 @@ export function ToggleTheme() {
         onValueChange={toggleColorScheme}
         trackColor={{ false: "#e9eaec", true: "#0061ff" }}
         thumbColor={"#ffffff"}
+        ios_backgroundColor="#e9eaec"
       />
     </Pressable>
   );

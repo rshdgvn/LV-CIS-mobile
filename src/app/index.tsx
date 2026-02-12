@@ -1,21 +1,50 @@
-import { Text, View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ToggleTheme } from "../components/settings/ToggleTheme";
+import { AnimatePresence, MotiView } from "moti";
+import React, { useState } from "react";
+import { Dimensions, View } from "react-native";
+import MainScreen from "../screens/MainScreen";
+import { CustomSplashScreen } from "../screens/SplashScreen";
+
+const { height } = Dimensions.get("window");
 
 export default function App() {
-  return (
-    <SafeAreaProvider>
-      <View className="flex-1 bg-background dark:bg-dark-bg">
-        <View className="p-6">
-          <ToggleTheme />
+  const [isSplashVisible, setSplashVisible] = useState(true);
 
-          <View className="mt-6 p-4 bg-card dark:bg-dark-card border border-border dark:border-dark-border rounded-2xl">
-            <Text className="text-foreground dark:text-dark-fg">
-              DarkMode Test
-            </Text>
-          </View>
-        </View>
-      </View>
-    </SafeAreaProvider>
+  return (
+    <View className="flex-1 bg-background dark:bg-dark-bg">
+      <AnimatePresence>
+        {isSplashVisible ? (
+          <MotiView
+            key="splash-wrapper"
+            exit={{
+              translateY: height,
+            }}
+            transition={{
+              type: "timing",
+              duration: 400,
+            }}
+            className="absolute inset-0 z-50"
+          >
+            <CustomSplashScreen onComplete={() => setSplashVisible(false)} />
+          </MotiView>
+        ) : (
+          <MotiView
+            key="app-content"
+            from={{
+              translateY: -height,
+            }}
+            animate={{
+              translateY: 0,
+            }}
+            transition={{
+              type: "timing",
+              duration: 400,
+            }}
+            className="flex-1"
+          >
+            <MainScreen />
+          </MotiView>
+        )}
+      </AnimatePresence>
+    </View>
   );
 }
