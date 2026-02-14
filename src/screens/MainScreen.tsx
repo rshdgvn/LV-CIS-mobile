@@ -1,9 +1,13 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ToggleTheme } from "../components/settings/ToggleTheme";
+import { AuthScreen } from "../types/navigation";
 
-export default function MainScreen() {
+interface Props {
+  onNavigate: (screen: AuthScreen) => void;
+}
+
+export default function MainScreen({ onNavigate }: Props) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -25,17 +29,26 @@ export default function MainScreen() {
           <Text className="text-muted-fg dark:text-dark-muted-fg text-lg text-center mt-4 leading-6">
             Everything your student organization needs in one easy platform.
           </Text>
-          <ToggleTheme />
         </View>
 
         <View className="gap-4">
-          <Pressable className="bg-primary h-14 rounded-2xl items-center justify-center shadow-md active:opacity-90">
+          <Pressable
+            className="bg-primary h-14 rounded-2xl items-center justify-center shadow-md active:opacity-90"
+            onPress={() => onNavigate("register")}
+          >
             <Text className="text-white font-bold text-lg">Get Started</Text>
           </Pressable>
 
-          <Pressable className="h-12 items-center justify-center active:opacity-60">
+          <Pressable className="h-12 items-center justify-center active:opacity-60 flex-row">
             <Text className="text-muted-fg dark:text-dark-muted-fg font-medium text-base">
-              I already have an account
+              I already have an account?
+            </Text>
+            <Text
+              className="text-primary dark:text-primary font-medium text-base"
+              onPress={() => onNavigate("login")}
+            >
+              {" "}
+              Login
             </Text>
           </Pressable>
         </View>

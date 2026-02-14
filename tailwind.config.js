@@ -6,7 +6,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // --- LIGHT MODE (Default) ---
         background: "#ffffff",
         foreground: "#1c1e26",
         card: "#ffffff",
@@ -25,14 +24,12 @@ module.exports = {
         border: "#e9eaec",
         input: "#e9eaec",
         ring: "#adb2c3",
-        // Charts
         "chart-1": "#93c5fd",
         "chart-2": "#60a5fa",
         "chart-3": "#3b82f6",
         "chart-4": "#2563eb",
         "chart-5": "#1d4ed8",
 
-        // --- DARK MODE MANUAL OVERRIDES ---
         dark: {
           bg: "#1c1e26",
           fg: "#f8f9fa",

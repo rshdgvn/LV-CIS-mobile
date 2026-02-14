@@ -16,14 +16,9 @@ export function CustomSplashScreen({ onComplete }: { onComplete: () => void }) {
   const targetBgColor = isDark ? "#1c1e26" : "#ffffff";
 
   useEffect(() => {
-    const statusTimer = setTimeout(() => {
-      setShowStatusBar(true);
-    }, 1800);
-
     const completionTimer = setTimeout(onComplete, 3200);
 
     return () => {
-      clearTimeout(statusTimer);
       clearTimeout(completionTimer);
     };
   }, [onComplete]);
