@@ -1,27 +1,40 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { ImageBackground, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AuthScreen } from "../types/navigation";
+import { ToggleTheme } from "../components/settings/ToggleTheme";
+import { useTheme } from "../hooks/useTheme";
 
 interface Props {
-  onNavigate: (screen: AuthScreen) => void;
+  onNavigate: (screen: "login" | "register") => void;
 }
 
 export default function MainScreen({ onNavigate }: Props) {
+  const { gradientTop, gradientBottom, isDark } = useTheme();
   const insets = useSafeAreaInsets();
 
   return (
-    <View
-      className="flex-1 bg-background dark:bg-dark-bg"
-      style={{
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-      }}
-    >
-      <View className="flex-1" />
+    <View className="flex-1 bg-background dark:bg-dark-bg">
+      <View className="flex-[1.3] w-full">
+        <ImageBackground
+          source={require("../../assets/lv-building.jpg")}
+          className="flex-1"
+          resizeMode="cover"
+          imageStyle={{ opacity: isDark ? 0.4 : 0.6 }}
+        >
+          <LinearGradient
+            colors={[gradientTop, gradientBottom]}
+            style={{ flex: 1 }}
+            locations={[0.8, 0.95]}
+          />
+        </ImageBackground>
+      </View>
 
-      <View className="flex-1 px-8 justify-center pb-12">
-        <View className="items-center mb-10 ">
+      <View
+        className="flex-1 px-8 justify-between"
+        style={{ paddingBottom: insets.bottom + 20 }}
+      >
+        <View className="items-center mt-4">
           <Text className="text-foreground dark:text-dark-fg text-4xl font-bold text-center leading-tight">
             Welcome to <Text className="text-primary">LVCIS</Text>
           </Text>
@@ -31,25 +44,22 @@ export default function MainScreen({ onNavigate }: Props) {
           </Text>
         </View>
 
-        <View className="gap-4">
+        <View className="gap-4 mb-20">
           <Pressable
-            className="bg-primary h-14 rounded-2xl items-center justify-center shadow-md active:opacity-90"
+            className="bg-primary h-16 rounded-2xl items-center justify-center shadow-md active:opacity-90"
             onPress={() => onNavigate("register")}
           >
             <Text className="text-white font-bold text-lg">Get Started</Text>
           </Pressable>
-
-          <Pressable className="h-12 items-center justify-center active:opacity-60 flex-row">
+          <ToggleTheme />
+          <Pressable
+            className="h-12 items-center justify-center active:opacity-60 flex-row"
+            onPress={() => onNavigate("login")}
+          >
             <Text className="text-muted-fg dark:text-dark-muted-fg font-medium text-base">
-              I already have an account?
+              I already have an account?{" "}
             </Text>
-            <Text
-              className="text-primary dark:text-primary font-medium text-base"
-              onPress={() => onNavigate("login")}
-            >
-              {" "}
-              Login
-            </Text>
+            <Text className="text-primary font-bold text-base">Login</Text>
           </Pressable>
         </View>
       </View>

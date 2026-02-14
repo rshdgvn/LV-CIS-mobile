@@ -5,8 +5,24 @@ export default function AuthLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        animation: "slide_from_right",
       }}
-    />
+    >
+      <Stack.Screen name="index" />
+
+      <Stack.Screen
+        name="register"
+        options={{
+          presentation: "transparentModal",
+          animation: "slide_from_bottom",
+        }}
+      />
+      <Stack.Screen
+        name="login"
+        options={{
+          presentation: "transparentModal",
+          animation: "slide_from_bottom",
+        }}
+      />
+    </Stack>
   );
 }
