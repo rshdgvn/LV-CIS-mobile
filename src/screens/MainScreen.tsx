@@ -2,7 +2,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { ImageBackground, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ToggleTheme } from "../components/settings/ToggleTheme";
 import { useTheme } from "../hooks/useTheme";
 
 interface Props {
@@ -20,7 +19,7 @@ export default function MainScreen({ onNavigate }: Props) {
           source={require("../../assets/lv-building.jpg")}
           className="flex-1"
           resizeMode="cover"
-          imageStyle={{ opacity: isDark ? 0.4 : 0.6 }}
+          imageStyle={{ opacity: isDark ? 0.4 : 0.4 }}
         >
           <LinearGradient
             colors={[gradientTop, gradientBottom]}
@@ -34,7 +33,7 @@ export default function MainScreen({ onNavigate }: Props) {
         className="flex-1 px-8 justify-between"
         style={{ paddingBottom: insets.bottom + 20 }}
       >
-        <View className="items-center mt-4">
+        <View className="items-center mt-8">
           <Text className="text-foreground dark:text-dark-fg text-4xl font-bold text-center leading-tight">
             Welcome to <Text className="text-primary">LVCIS</Text>
           </Text>
@@ -51,7 +50,6 @@ export default function MainScreen({ onNavigate }: Props) {
           >
             <Text className="text-white font-bold text-lg">Get Started</Text>
           </Pressable>
-          <ToggleTheme />
           <Pressable
             className="h-12 items-center justify-center active:opacity-60 flex-row"
             onPress={() => onNavigate("login")}

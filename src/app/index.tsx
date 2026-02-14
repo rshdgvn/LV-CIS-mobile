@@ -1,15 +1,18 @@
+import { useRouter } from "expo-router";
 import { AnimatePresence, MotiView } from "moti";
 import React, { useState } from "react";
-import { Modal, View } from "react-native";
-import LoginScreen from "../screens/auth/LoginScreen";
-import RegisterScreen from "../screens/auth/RegisterScreen";
+import { View } from "react-native";
 import MainScreen from "../screens/MainScreen";
 import { CustomSplashScreen } from "../screens/SplashScreen";
-import { AuthModalState } from "../types/navigation";
+import { AuthScreen } from "../types/navigation";
 
 export default function App() {
-  const [isSplashVisible, setSplashVisible] = useState<boolean>(true);
-  const [activeModal, setActiveModal] = useState<AuthModalState>(null);
+  const router = useRouter();
+  const [isSplashVisible, setSplashVisible] = useState(true);
+
+  const onNavigate = (screen: AuthScreen) => {
+    router.push(`/${screen}`);
+  };
 
   return (
     <View className="flex-1 bg-background dark:bg-dark-bg">
@@ -33,30 +36,9 @@ export default function App() {
           transition={{ type: "timing", duration: 400 }}
           className="flex-1"
         >
-          <MainScreen onNavigate={(screen) => setActiveModal(screen)} />
+          <MainScreen onNavigate={onNavigate} />
         </MotiView>
       )}
-
-      <Modal
-        visible={activeModal !== null}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={() => setActiveModal(null)}
-      >
-        {activeModal === "login" && (
-          <LoginScreen
-            onClose={() => setActiveModal(null)}
-            onSwitch={() => setActiveModal("register")}
-          />
-        )}
-
-        {activeModal === "register" && (
-          <RegisterScreen
-            onClose={() => setActiveModal(null)}
-            onSwitch={() => setActiveModal("register")}
-          />
-        )}
-      </Modal>
     </View>
   );
 }

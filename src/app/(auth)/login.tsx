@@ -1,12 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import LoginScreen from "@/src/screens/auth/LoginScreen";
+import { useRouter } from "expo-router";
+import React from "react";
 
 const login = () => {
+  const router = useRouter();
   return (
-    <View>
-      <Text>login</Text>
-    </View>
-  )
-}
+    <LoginScreen
+      onNavigate={() => {
+        router.push("/(auth)/register");
+      }}
+    />
+  );
+};
 
-export default login
+export default login;

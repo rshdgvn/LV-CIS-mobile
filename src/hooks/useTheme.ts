@@ -1,7 +1,7 @@
-import { useColorScheme } from "nativewind";
+import { useColorScheme } from "react-native";
 
 export function useTheme() {
-  const { colorScheme } = useColorScheme();
+  const colorScheme = useColorScheme();
 
   const isDark = colorScheme === "dark";
   const bgColor = isDark ? "#1c1e26" : "#ffffff";
