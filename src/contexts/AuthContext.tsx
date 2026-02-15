@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as SecureStore from "expo-secure-store";
 import React, { createContext, useContext } from "react";
 import { authService } from "../services/authService";
-import { AuthContextType, User } from "../types/auth";
+import { AuthContextType, RegisterPayload, User } from "../types/auth";
 import { TOKEN_KEY } from "../utils/constant";
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -25,6 +25,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
     retry: false,
   });
+
+  const signUp = async (data: RegisterPayload): Promise<void> => {
+    await authService.register(data);
+  };
 
   const signIn = async (token: string, newUser: User) => {
     await SecureStore.setItemAsync(TOKEN_KEY, token);
@@ -49,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         signIn,
         signOut,
-        signUp: authService.register,
+        signUp,
       }}
     >
       {children}
