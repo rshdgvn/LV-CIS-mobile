@@ -1,9 +1,33 @@
 import { InputField } from "@/src/components/InputField";
-import React from "react";
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { LoginPayload } from "@/src/types/auth"; // Import your type
+import React, { useState } from "react";
+import {
+  Alert,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function LoginScreen({ onNavigate }: any) {
+type Props = {
+  onNavigate: () => void;
+  onLogin: (data: LoginPayload) => void;
+};
+
+export default function LoginScreen({ onNavigate, onLogin }: Props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = () => {
+    if (!email || !password) {
+      Alert.alert("Required", "Please fill in both email and password.");
+      return;
+    }
+    onLogin({ email, password });
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-card dark:bg-dark-bg px-8 pt-4 pb-10 justify-center">
       <View className="items-center mb-8">
@@ -28,6 +52,8 @@ export default function LoginScreen({ onNavigate }: any) {
         keyboardType="email-address"
         autoCapitalize="none"
         containerStyles="mb-4"
+        value={email}
+        onChangeText={setEmail}
       />
 
       <View className="mb-6">
@@ -42,12 +68,17 @@ export default function LoginScreen({ onNavigate }: any) {
           </Pressable>
         </View>
 
-        <InputField placeholder="Enter your password" isPassword={true} />
+        <InputField
+          placeholder="Enter your password"
+          isPassword={true}
+          value={password}
+          onChangeText={setPassword}
+        />
       </View>
 
       <Pressable
         className="bg-primary dark:bg-dark-primary h-14 rounded-xl items-center justify-center shadow-md active:opacity-90"
-        onPress={() => {}}
+        onPress={handleSubmit}
       >
         <Text className="text-primary-fg dark:text-dark-primary-fg font-bold text-lg">
           Sign in

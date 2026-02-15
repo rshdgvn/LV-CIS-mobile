@@ -1,14 +1,14 @@
 import * as SecureStore from "expo-secure-store";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { authService } from "../services/authService";
-import { AuthContextType, User } from "../types/auth";
+import { AuthContextType, RegisterPayload, User } from "../types/auth";
 import { TOKEN_KEY } from "../utils/constant";
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const loadSession = async () => {
@@ -34,6 +34,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(newUser);
   };
 
+  const signUp = async (data: RegisterPayload) => {
+    try {
+      await authService.register(data);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const signOut = async () => {
     try {
       await authService.logout();
@@ -52,6 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         signIn,
         signOut,
+        signUp,
       }}
     >
       {children}
