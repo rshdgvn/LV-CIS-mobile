@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import { API_URL } from "../utils/constant";
+import { API_URL, TOKEN_KEY } from "../utils/constant";
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -11,7 +11,7 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-  const token = await SecureStore.getItemAsync("sanctum_token");
+  const token = await SecureStore.getItemAsync(TOKEN_KEY);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
