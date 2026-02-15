@@ -1,4 +1,3 @@
-// app/(auth)/login.tsx
 import { useAuth } from "@/src/contexts/AuthContext";
 import LoginScreen from "@/src/screens/auth/LoginScreen";
 import { authService } from "@/src/services/authService";
