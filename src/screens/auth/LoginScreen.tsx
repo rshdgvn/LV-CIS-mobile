@@ -1,5 +1,5 @@
 import { InputField } from "@/src/components/InputField";
-import { LoginPayload } from "@/src/types/auth"; // Import your type
+import { LoginPayload } from "@/src/types/auth";
 import React, { useState } from "react";
 import {
   Alert,
@@ -31,10 +31,10 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
   return (
     <SafeAreaView className="flex-1 bg-card dark:bg-dark-bg px-8 pt-4 pb-10 justify-center">
       <View className="items-center mb-8">
-        <View className="w-20 h-20 rounded-full bg-card dark:bg-dark-card shadow-sm items-center justify-center mb-4 border border-border dark:border-dark-border">
+        <View className="mb-3">
           <Image
             source={require("../../../assets/lvcc-logo.png")}
-            className="w-16 h-16"
+            className="w-20 h-20"
             resizeMode="contain"
           />
         </View>
@@ -62,7 +62,7 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
             Password
           </Text>
           <Pressable>
-            <Text className="text-primary dark:text-dark-primary text-xs font-bold">
+            <Text className="text-primary dark:text-dark-primary text-sm font-bold">
               Forgot your password?
             </Text>
           </Pressable>
@@ -85,17 +85,6 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
         </Text>
       </Pressable>
 
-      <View className="flex-row justify-center mt-6">
-        <Text className="text-muted-fg dark:text-dark-muted-fg">
-          Don't have an account?{" "}
-        </Text>
-        <TouchableOpacity onPress={onNavigate}>
-          <Text className="text-primary dark:text-dark-primary font-bold">
-            Sign up.
-          </Text>
-        </TouchableOpacity>
-      </View>
-
       <View className="flex-row items-center my-6">
         <View className="flex-1 h-[1px] bg-border dark:bg-dark-border" />
         <Text className="mx-4 text-muted-fg dark:text-dark-muted-fg text-sm">
@@ -115,6 +104,17 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
           Continue with Google
         </Text>
       </Pressable>
+
+      <View className="flex-row justify-center mt-6">
+        <Text className="text-muted-fg dark:text-dark-muted-fg">
+          Don't have an account?{" "}
+        </Text>
+        <TouchableOpacity onPress={onNavigate}>
+          <Text className="text-primary dark:text-dark-primary font-bold">
+            Sign up.
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }

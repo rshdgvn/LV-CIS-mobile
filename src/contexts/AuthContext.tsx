@@ -1,4 +1,3 @@
-// src/contexts/AuthContext.tsx
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as SecureStore from "expo-secure-store";
 import React, { createContext, useContext } from "react";
