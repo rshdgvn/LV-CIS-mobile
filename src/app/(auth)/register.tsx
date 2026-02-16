@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { Alert } from "react-native";
 
-const register = () => {
+const Register = () => {
   const router = useRouter();
 
   const mutation = useMutation({
@@ -50,4 +50,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

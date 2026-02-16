@@ -1,5 +1,6 @@
 import { InputField } from "@/src/components/InputField";
 import { LoginPayload } from "@/src/types/auth";
+import { AuthScreen } from "@/src/types/navigation";
 import React, { useState } from "react";
 import {
   Alert,
@@ -11,14 +12,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type Props = {
-  onNavigate: () => void;
+interface Props {
+  onNavigate: (screen: AuthScreen) => void;
   onLogin: (data: LoginPayload) => void;
-};
+  isLoading: boolean;
+}
 
-export default function LoginScreen({ onNavigate, onLogin }: Props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function LoginScreen({ onNavigate, onLogin, isLoading }: Props) {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = () => {
     if (!email || !password) {
@@ -61,7 +63,7 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
           <Text className="font-semibold text-foreground dark:text-dark-fg">
             Password
           </Text>
-          <Pressable>
+          <Pressable onPress={() => onNavigate("forgot-password")}>
             <Text className="text-primary dark:text-dark-primary text-sm font-bold">
               Forgot your password?
             </Text>
@@ -109,7 +111,7 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
         <Text className="text-muted-fg dark:text-dark-muted-fg">
           Don't have an account?{" "}
         </Text>
-        <TouchableOpacity onPress={onNavigate}>
+        <TouchableOpacity onPress={() => onNavigate("register")}>
           <Text className="text-primary dark:text-dark-primary font-bold">
             Sign up.
           </Text>

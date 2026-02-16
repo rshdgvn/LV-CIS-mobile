@@ -1,11 +1,7 @@
 import { Platform } from "react-native";
 import { api } from "../api/api";
-import {
-  AuthResponse,
-  LoginPayload,
-  RegisterPayload,
-  User,
-} from "../types/auth";
+import { AuthResponse, LoginPayload, RegisterPayload } from "../types/auth";
+import { User } from "../types/user";
 
 export const authService = {
   login: async (data: LoginPayload) => {
@@ -23,6 +19,7 @@ export const authService = {
       last_name: data.lastname,
       email: data.email,
       password: data.password,
+      password_confirmation: data.password_confirmation,
       course: data.course,
       year_level: data.year,
     };

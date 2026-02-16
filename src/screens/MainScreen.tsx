@@ -3,9 +3,10 @@ import React from "react";
 import { ImageBackground, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "../hooks/useTheme";
+import { AuthScreen } from "../types/navigation";
 
 interface Props {
-  onNavigate: (screen: "login" | "register") => void;
+  onNavigate: (screen: AuthScreen) => void;
 }
 
 export default function MainScreen({ onNavigate }: Props) {
@@ -19,7 +20,7 @@ export default function MainScreen({ onNavigate }: Props) {
           source={require("../../assets/lv-building.jpg")}
           className="flex-1"
           resizeMode="cover"
-          imageStyle={{ opacity: isDark ? 0.4 : 0.4 }}
+          imageStyle={{ opacity: isDark ? 0.4 : 0.6 }}
         >
           <LinearGradient
             colors={[gradientTop, gradientBottom]}

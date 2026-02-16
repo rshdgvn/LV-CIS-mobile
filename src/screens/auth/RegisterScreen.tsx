@@ -12,27 +12,21 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type Props = {
+interface Props {
   onNavigate: () => void;
   onRegister: (data: RegisterPayload) => void;
-  isLoading?: boolean;
+  isLoading: boolean;
 };
 
-export default function RegisterScreen({
-  onNavigate,
-  onRegister,
-  isLoading,
-}: Props) {
-  // 1. State for all inputs
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [course, setCourse] = useState("");
-  const [year, setYear] = useState("");
+export default function RegisterScreen({ onNavigate, onRegister, isLoading, }: Props) {
+  const [firstname, setFirstname] = useState<string>("");
+  const [lastname, setLastname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [course, setCourse] = useState<string>("");
+  const [year, setYear] = useState<string>("");
 
-  // 2. Handle Submit
   const handleRegister = () => {
     if (!firstname || !lastname || !email || !password || !course || !year) {
       Alert.alert("Missing Fields", "Please fill in all required fields.");
@@ -57,7 +51,6 @@ export default function RegisterScreen({
 
   return (
     <SafeAreaView className="bg-background dark:bg-dark-bg flex-1">
-      {/* Wrapped in ScrollView to handle small screens/keyboard */}
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 32, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
@@ -127,7 +120,6 @@ export default function RegisterScreen({
 
         <View className="flex-row gap-3 mb-8">
           <View className="flex-1">
-            {/* Changed to InputField for simplicity */}
             <InputField
               label="Course"
               placeholder="e.g. BSIS"
@@ -137,7 +129,6 @@ export default function RegisterScreen({
           </View>
 
           <View className="flex-1">
-            {/* Changed to InputField for simplicity */}
             <InputField
               label="Year Level"
               placeholder="e.g. 3"

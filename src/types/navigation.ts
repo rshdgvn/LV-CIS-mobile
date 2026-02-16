@@ -1,3 +1,1 @@
-export type AuthScreen = "login" | "register";
-
-export type AuthModalState = "login" | "register" | null;
+export type AuthScreen = "login" | "register" | "forgot-password";
