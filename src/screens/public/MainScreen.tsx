@@ -2,8 +2,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { ImageBackground, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTheme } from "../hooks/useTheme";
-import { AuthScreen } from "../types/navigation";
+import { useTheme } from "../../hooks/useTheme";
+import { AuthScreen } from "../../types/navigation";
 
 interface Props {
   onNavigate: (screen: AuthScreen) => void;
@@ -17,7 +17,7 @@ export default function MainScreen({ onNavigate }: Props) {
     <View className="flex-1 bg-background dark:bg-dark-bg">
       <View className="flex-[1.3] w-full">
         <ImageBackground
-          source={require("../../assets/lv-building.jpg")}
+          source={require("../../../assets/lv-building.jpg")}
           className="flex-1"
           resizeMode="cover"
           imageStyle={{ opacity: isDark ? 0.4 : 0.6 }}

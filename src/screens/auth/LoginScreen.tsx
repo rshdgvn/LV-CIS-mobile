@@ -1,4 +1,4 @@
-import { InputField } from "@/src/components/InputField";
+import { InputField } from "@/src/components/common/InputField";
 import { LoginPayload } from "@/src/types/auth";
 import { AuthScreen } from "@/src/types/navigation";
 import React, { useState } from "react";
@@ -63,11 +63,11 @@ export default function LoginScreen({ onNavigate, onLogin, isLoading }: Props) {
           <Text className="font-semibold text-foreground dark:text-dark-fg">
             Password
           </Text>
-          <Pressable onPress={() => onNavigate("forgot-password")}>
+          <TouchableOpacity onPress={() => onNavigate("forgot-password")}>
             <Text className="text-primary dark:text-dark-primary text-sm font-bold">
               Forgot your password?
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         <InputField
@@ -81,11 +81,23 @@ export default function LoginScreen({ onNavigate, onLogin, isLoading }: Props) {
       <Pressable
         className="bg-primary dark:bg-dark-primary h-14 rounded-xl items-center justify-center shadow-md active:opacity-90"
         onPress={handleSubmit}
+        disabled={isLoading}
       >
         <Text className="text-primary-fg dark:text-dark-primary-fg font-bold text-lg">
-          Sign in
+          {isLoading ? "Signing in..." : "Sign in"}
         </Text>
       </Pressable>
+
+      <View className="flex-row justify-center mt-6">
+        <Text className="text-muted-fg dark:text-dark-muted-fg">
+          Don't have an account?{" "}
+        </Text>
+        <TouchableOpacity onPress={() => onNavigate("register")}>
+          <Text className="text-primary dark:text-dark-primary font-bold">
+            Sign up.
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <View className="flex-row items-center my-6">
         <View className="flex-1 h-[1px] bg-border dark:bg-dark-border" />
@@ -106,17 +118,6 @@ export default function LoginScreen({ onNavigate, onLogin, isLoading }: Props) {
           Continue with Google
         </Text>
       </Pressable>
-
-      <View className="flex-row justify-center mt-6">
-        <Text className="text-muted-fg dark:text-dark-muted-fg">
-          Don't have an account?{" "}
-        </Text>
-        <TouchableOpacity onPress={() => onNavigate("register")}>
-          <Text className="text-primary dark:text-dark-primary font-bold">
-            Sign up.
-          </Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }

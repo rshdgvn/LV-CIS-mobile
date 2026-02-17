@@ -12,7 +12,7 @@ module.exports = {
         "card-fg": "#1c1e26",
         popover: "#ffffff",
         "popover-fg": "#1c1e26",
-        primary: "#0061ff",
+        primary: "#3E74FF",
         "primary-fg": "#f4f6fb",
         secondary: "#f4f4f5",
         "secondary-fg": "#34323c",
