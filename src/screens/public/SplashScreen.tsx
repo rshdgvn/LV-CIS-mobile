@@ -1,11 +1,11 @@
+import { SCREEN_HEIGHT } from "@/src/constants/layout";
 import { MotiView } from "moti";
 import React, { useEffect } from "react";
-import { Dimensions, Image, View } from "react-native";
-import { useTheme } from "../hooks/useTheme";
+import { Image, View } from "react-native";
+import { useTheme } from "../../hooks/useTheme";
 
-const { height } = Dimensions.get("window");
 const CIRCLE_SIZE = 100;
-const FINAL_SCALE = (height / CIRCLE_SIZE) * 4;
+const FINAL_SCALE = (SCREEN_HEIGHT / CIRCLE_SIZE) * 4;
 
 export function CustomSplashScreen({ onComplete }: { onComplete: () => void }) {
   const { bgColor } = useTheme();
@@ -47,7 +47,7 @@ export function CustomSplashScreen({ onComplete }: { onComplete: () => void }) {
         }}
       >
         <Image
-          source={require("../../assets/lvcc-logo.png")}
+          source={require("../../../assets/lvcc-logo.png")}
           style={{ width: 100, height: 100 }}
           resizeMode="contain"
         />

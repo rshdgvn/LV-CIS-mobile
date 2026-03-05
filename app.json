@@ -19,20 +19,20 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/lvcc-logo.png",
+        "backgroundImage": "./assets/lv-building.jpg",
+        "monochromeImage": "./assets/lv-building.jpg"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "statusBar": {
         "translucent": true,
-        "backgroundColor": "#00000000" 
+        "backgroundColor": "#00000000"
       }
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png",
+      "favicon": "./assets/lvcc-logo.png",
       "bundler": "metro"
     },
     "plugins": [
@@ -49,7 +49,8 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

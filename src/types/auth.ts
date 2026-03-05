@@ -1,7 +1,9 @@
+import { User } from "./user";
+
 export interface LoginPayload {
   email: string;
   password: string;
-  device_name?: string; // Laravel Sanctum needs this
+  device_name?: string;
 }
 
 export interface RegisterPayload {
@@ -12,12 +14,6 @@ export interface RegisterPayload {
   password_confirmation: string;
   course: string;
   year: string;
-}
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
 }
 
 export interface AuthResponse {

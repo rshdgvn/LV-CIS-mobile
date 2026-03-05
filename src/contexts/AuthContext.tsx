@@ -1,14 +1,26 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as SecureStore from "expo-secure-store";
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import { authService } from "../services/authService";
-import { AuthContextType, RegisterPayload, User } from "../types/auth";
-import { TOKEN_KEY } from "../utils/constant";
+import { AuthContextType, RegisterPayload } from "../types/auth";
+import { User } from "../types/user";
+import { TOKEN_KEY } from "../utils/config";
+import { setUnauthorizedCallback } from "../api/api"; 
+import { useRouter } from "expo-router"; 
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
+  const router = useRouter();
+  
+  useEffect(() => {
+    setUnauthorizedCallback(() => {
+      queryClient.setQueryData(["user"], null);
+      
+      router.replace("/(auth)/login"); 
+    });
+  }, [queryClient, router]);
 
   const { data: user, isLoading } = useQuery({
     queryKey: ["user"],

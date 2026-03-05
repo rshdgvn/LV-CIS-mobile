@@ -1,5 +1,6 @@
-import { InputField } from "@/src/components/InputField";
+import { InputField } from "@/src/components/common/InputField";
 import { LoginPayload } from "@/src/types/auth";
+import { AuthScreen } from "@/src/types/navigation";
 import React, { useState } from "react";
 import {
   Alert,
@@ -11,14 +12,16 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type Props = {
-  onNavigate: () => void;
+interface Props {
+  onNavigate: (screen: AuthScreen) => void;
   onLogin: (data: LoginPayload) => void;
-};
+  isLoading: boolean;
+  onGoogleLogin: () => void;
+}
 
-export default function LoginScreen({ onNavigate, onLogin }: Props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function LoginScreen({ onNavigate, onLogin, isLoading, onGoogleLogin }: Props) {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = () => {
     if (!email || !password) {
@@ -61,11 +64,11 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
           <Text className="font-semibold text-foreground dark:text-dark-fg">
             Password
           </Text>
-          <Pressable>
+          <TouchableOpacity onPress={() => onNavigate("forgot-password")}>
             <Text className="text-primary dark:text-dark-primary text-sm font-bold">
               Forgot your password?
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         <InputField
@@ -79,11 +82,23 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
       <Pressable
         className="bg-primary dark:bg-dark-primary h-14 rounded-xl items-center justify-center shadow-md active:opacity-90"
         onPress={handleSubmit}
+        disabled={isLoading}
       >
         <Text className="text-primary-fg dark:text-dark-primary-fg font-bold text-lg">
-          Sign in
+          {isLoading ? "Signing in..." : "Sign in"}
         </Text>
       </Pressable>
+
+      <View className="flex-row justify-center mt-6">
+        <Text className="text-muted-fg dark:text-dark-muted-fg">
+          Don't have an account?{" "}
+        </Text>
+        <TouchableOpacity onPress={() => onNavigate("register")}>
+          <Text className="text-primary dark:text-dark-primary font-bold">
+            Sign up.
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <View className="flex-row items-center my-6">
         <View className="flex-1 h-[1px] bg-border dark:bg-dark-border" />
@@ -93,7 +108,10 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
         <View className="flex-1 h-[1px] bg-border dark:bg-dark-border" />
       </View>
 
-      <Pressable className="border border-border dark:border-dark-border h-14 rounded-xl items-center justify-center flex-row active:bg-muted dark:active:bg-dark-muted mb-4">
+      <Pressable
+        onPress={onGoogleLogin}
+        className="border border-border dark:border-dark-border h-14 rounded-xl items-center justify-center flex-row active:bg-muted dark:active:bg-dark-muted mb-4"
+      >
         <Image
           source={{
             uri: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
@@ -104,17 +122,6 @@ export default function LoginScreen({ onNavigate, onLogin }: Props) {
           Continue with Google
         </Text>
       </Pressable>
-
-      <View className="flex-row justify-center mt-6">
-        <Text className="text-muted-fg dark:text-dark-muted-fg">
-          Don't have an account?{" "}
-        </Text>
-        <TouchableOpacity onPress={onNavigate}>
-          <Text className="text-primary dark:text-dark-primary font-bold">
-            Sign up.
-          </Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }
