@@ -1,6 +1,6 @@
 import { useAuth } from "@/src/contexts/AuthContext";
 import React from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -8,7 +8,11 @@ const Dashboard = () => {
   return (
     <View>
       <Text>index</Text>
-      <Text>Welcome, {user?.last_name}!</Text>
+
+      <Image
+        source={{ uri: user?.avatar }}
+        style={{ width: 50, height: 50, borderRadius: 25 }}
+      />
     </View>
   );
 };

@@ -1,24 +1,26 @@
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { Alert } from 'react-native';
-import { API_URL } from '../utils/config';
+import { API_URL, MOBILE_APP_URL } from '../utils/config';
 
 WebBrowser.maybeCompleteAuthSession();
 
 export const useGoogleAuth = () => {
   const promptGoogleAuth = async (mode: 'login' | 'signup') => {
     try {
-      const redirectUrl = Linking.createURL('auth/callback');
+      const redirectUrl = MOBILE_APP_URL;
       
-      const authUrl = `${API_URL}auth/google?mode=${mode}&platform=mobile`;
+      const authUrl = `${API_URL}auth/google?mode=${mode}&platform=mobile&mobile_app_url=${encodeURIComponent(redirectUrl)}`;
 
       const result = await WebBrowser.openAuthSessionAsync(authUrl, redirectUrl);
 
       if (result.type === 'success' && result.url) {
-        const urlParams = new URL(result.url).searchParams;
-        const token = urlParams.get('token');
-        const error = urlParams.get('error'); 
-        const status = urlParams.get('status');
+        const parsedUrl = Linking.parse(result.url);
+        const queryParams = parsedUrl.queryParams;
+
+        const token = queryParams?.token as string | undefined;
+        const error = queryParams?.error as string | undefined;
+        const status = queryParams?.status as string | undefined;
 
         if (error) {
           Alert.alert("Authentication Failed", error);

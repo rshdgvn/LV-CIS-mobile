@@ -6,7 +6,10 @@ import React from "react";
 import { Alert } from "react-native";
 
 export default function ResetPassword() {
-  const { email, code } = useLocalSearchParams<{ email: string; code: string }>();
+  const { email, code } = useLocalSearchParams<{
+    email: string;
+    code: string;
+  }>();
   const router = useRouter();
 
   const mutation = useMutation({
