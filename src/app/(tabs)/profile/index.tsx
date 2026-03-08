@@ -16,7 +16,6 @@ const Profile = () => {
         style: "destructive",
         onPress: async () => {
           await signOut();
-          router.replace("/login");
         },
       },
     ]);
@@ -32,7 +31,7 @@ const Profile = () => {
 
   const handleNotifications = () => {
     router.push("/profile/notifications");
-  }
+  };
 
   return (
     <ProfileScreen

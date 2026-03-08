@@ -34,7 +34,7 @@ const ProfileScreen = ({
           <View className="relative">
             <Image
               source={{ uri: user?.avatar }}
-              className="w-32 h-32 rounded-full border-4 border-card dark:border-dark-card"
+              className="w-32 h-32 rounded-full"
             />
           </View>
           <Text className="text-2xl font-bold text-foreground dark:text-dark-fg mt-4">
@@ -65,7 +65,11 @@ const ProfileScreen = ({
           Preferences
         </Text>
         <ToggleTheme />
-        <ProfileOption icon={Bell} title="Notifications" onPress={onNotifications} />
+        <ProfileOption
+          icon={Bell}
+          title="Notifications"
+          onPress={onNotifications}
+        />
 
         <TouchableOpacity
           onPress={onSignOut}

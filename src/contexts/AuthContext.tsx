@@ -1,24 +1,24 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import React, { createContext, useContext, useEffect } from "react";
+import { setUnauthorizedCallback } from "../api/api";
 import { authService } from "../services/authService";
 import { AuthContextType, RegisterPayload } from "../types/auth";
 import { User } from "../types/user";
 import { TOKEN_KEY } from "../utils/config";
-import { setUnauthorizedCallback } from "../api/api"; 
-import { useRouter } from "expo-router"; 
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  
+
   useEffect(() => {
     setUnauthorizedCallback(() => {
       queryClient.setQueryData(["user"], null);
-      
-      router.replace("/(auth)/login"); 
+
+      router.replace("/(auth)/login");
     });
   }, [queryClient, router]);
 
@@ -51,9 +51,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await authService.logout();
     } catch (e) {
       console.log("Logout error", e);
+    } finally {
+      await SecureStore.deleteItemAsync(TOKEN_KEY);
+      queryClient.setQueryData(["user"], null);
+      queryClient.removeQueries();
     }
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
-    queryClient.setQueryData(["user"], null);
   };
 
   return (
