@@ -1,12 +1,24 @@
+import { useTheme } from "@/src/hooks/useTheme";
 import { BottomNav } from "@/src/layouts/BottomNav";
 import { Tab } from "@/src/types/tab";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Stack, usePathname, useRouter } from "expo-router";
-import React from "react";
-import { View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabsLayout() {
   const router = useRouter();
   const pathname = usePathname();
+  const { primaryColor } = useTheme();
+
+  const insets = useSafeAreaInsets();
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), 150);
+    return () => clearTimeout(timer);
+  }, []);
 
   const hideNavRoutes = [
     "/profile",
@@ -42,7 +54,7 @@ export default function TabsLayout() {
   };
 
   return (
-    <View className="flex-1 bg-background dark:bg-dark-bg">
+    <View className="flex-1 bg-background dark:bg-dark-bg relative">
       <View className="flex-1">
         <Stack
           screenOptions={{
@@ -53,7 +65,30 @@ export default function TabsLayout() {
         />
       </View>
 
-      {!shouldHideNav && (
+      {!shouldHideNav && isReady && (
+        <View
+          className="absolute z-50"
+          style={{
+            top: insets.top + 16,
+            right: 24,
+          }}
+        >
+          <TouchableOpacity
+            className="w-12 h-12 rounded-full bg-muted dark:bg-dark-muted justify-center items-center relative shadow-sm"
+            activeOpacity={0.7}
+            onPress={() => router.push("/profile/notifications")}
+          >
+            <MaterialCommunityIcons
+              name="bell-outline"
+              size={24}
+              color={primaryColor}
+            />
+            <View className="absolute top-2.5 right-3 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-background dark:border-dark-bg" />
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {!shouldHideNav && isReady && (
         <BottomNav activeTab={getActiveTab()} onTabPress={handleTabPress} />
       )}
     </View>
