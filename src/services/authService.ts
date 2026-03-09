@@ -54,13 +54,21 @@
       return response.data;
     },
 
-    resetPassword: async (data: any) => {
-      const response = await api.post("/reset-password", {
-        email: data.email,
-        code: data.code,
-        password: data.password,
-        password_confirmation: data.password_confirmation,
-      });
-      return response.data;
-    },
-  };
+  resetPassword: async (data: any) => {
+    const response = await api.post("/reset-password", {
+      email: data.email,
+      code: data.code,
+      password: data.password,
+      password_confirmation: data.password_confirmation,
+    });
+    return response.data;
+  },
+
+  resendUnauthenticatedVerification: async (email: string) => {
+    const response = await api.post("email/resend", {
+      email: email,
+      mobile_app_url: MOBILE_APP_URL,
+    });
+    return response.data;
+  },
+};
