@@ -18,7 +18,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setUnauthorizedCallback(() => {
       queryClient.setQueryData(["user"], null);
-
       router.replace("/(auth)/login");
     });
   }, [queryClient, router]);
@@ -29,7 +28,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
       if (!token) return null;
       try {
-        return await authService.getUser();
+        const response = await authService.getUser();
+      
+        return {
+          ...response.user,
+          member: response.member 
+        } as User;
       } catch (error) {
         await SecureStore.deleteItemAsync(TOKEN_KEY);
         return null;
