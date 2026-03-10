@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Camera, ChevronLeft, Lock, ChevronDown } from "lucide-react-native";
+import { Camera, ChevronLeft, Lock } from "lucide-react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useAuth } from "@/src/contexts/AuthContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -27,8 +27,8 @@ const EditProfileScreen = ({ onSave }: { onSave?: () => void }) => {
   const [form, setForm] = useState({
     first_name: user?.first_name || "",
     last_name: user?.last_name || "",
-    course: user?.member?.course || "BSIS",
-    year_level: user?.member?.year_level || "1",
+    course: user?.member?.course || "",       
+    year_level: user?.member?.year_level || "", 
   });
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -136,19 +136,18 @@ const EditProfileScreen = ({ onSave }: { onSave?: () => void }) => {
           </View>
         </View>
 
-        {/* Custom Dropdowns */}
+        {/* Dropdowns */}
         <CustomDropdown 
           label="Course" 
           options={courses} 
           value={form.course} 
-          onSelect={(val) => setForm({ ...form, course: val })} 
+          onSelect={(val: string) => setForm({ ...form, course: val })} 
         />
-
         <CustomDropdown 
           label="Year Level" 
           options={years} 
           value={form.year_level} 
-          onSelect={(val) => setForm({ ...form, year_level: val })} 
+          onSelect={(val: string) => setForm({ ...form, year_level: val })} 
         />
 
         {/* Save Button */}
