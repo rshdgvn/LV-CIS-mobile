@@ -89,7 +89,14 @@ export default function TabsLayout() {
       )}
 
       {!shouldHideNav && isReady && (
-        <BottomNav activeTab={getActiveTab()} onTabPress={handleTabPress} />
+        <View
+          style={{
+            paddingBottom: insets.bottom,
+            backgroundColor: "transparent",
+          }}
+        >
+          <BottomNav activeTab={getActiveTab()} onTabPress={handleTabPress} />
+        </View>
       )}
     </View>
   );
