@@ -1,6 +1,6 @@
 import { api } from "@/src/api/api";
 import { AuthResponse, LoginPayload, RegisterPayload } from "@/src/types/auth";
-import { MOBILE_APP_URL } from "@/src/utils/config";
+import * as Linking from "expo-linking"; 
 import { Platform } from "react-native";
 import { User } from "../types/user";
 
@@ -15,6 +15,8 @@ export const authService = {
   },
 
   register: async (data: RegisterPayload) => {
+    const appUrl = Linking.createURL(""); 
+
     const payload = {
       first_name: data.firstname,
       last_name: data.lastname,
@@ -23,11 +25,11 @@ export const authService = {
       password_confirmation: data.password_confirmation,
       course: data.course,
       year_level: data.year,
-      mobile_app_url: MOBILE_APP_URL,
+      mobile_app_url: appUrl,
     };
 
     const response = await api.post<{ message: string }>("/signup", payload);
-    console.log("Registration Response:", response.data, MOBILE_APP_URL);
+    console.log("Registration Response:", response.data, appUrl);
     return response.data;
   },
 
@@ -61,9 +63,11 @@ export const authService = {
   },
 
   resendUnauthenticatedVerification: async (email: string) => {
+    const appUrl = Linking.createURL(""); 
+
     const response = await api.post("email/resend", {
       email: email,
-      mobile_app_url: MOBILE_APP_URL,
+      mobile_app_url: appUrl, 
     });
     return response.data;
   },

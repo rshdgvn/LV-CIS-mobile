@@ -1,20 +1,23 @@
-import * as Linking from 'expo-linking';
-import * as WebBrowser from 'expo-web-browser';
-import { Alert } from 'react-native';
-import { API_URL, MOBILE_APP_URL } from '@/src/utils/config';
+import { API_URL } from "@/src/utils/config";
+import * as Linking from "expo-linking";
+import * as WebBrowser from "expo-web-browser";
+import { Alert } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export const useGoogleAuth = () => {
-  const promptGoogleAuth = async (mode: 'login' | 'signup') => {
+  const promptGoogleAuth = async (mode: "login" | "signup") => {
     try {
-      const redirectUrl = MOBILE_APP_URL;
-      
+      const redirectUrl = Linking.createURL("/");
+
       const authUrl = `${API_URL}auth/google?mode=${mode}&platform=mobile&mobile_app_url=${encodeURIComponent(redirectUrl)}`;
 
-      const result = await WebBrowser.openAuthSessionAsync(authUrl, redirectUrl);
+      const result = await WebBrowser.openAuthSessionAsync(
+        authUrl,
+        redirectUrl,
+      );
 
-      if (result.type === 'success' && result.url) {
+      if (result.type === "success" && result.url) {
         const parsedUrl = Linking.parse(result.url);
         const queryParams = parsedUrl.queryParams;
 
@@ -27,10 +30,10 @@ export const useGoogleAuth = () => {
           return null;
         }
 
-        if (status === 'signup_success') {
+        if (status === "signup_success") {
           Alert.alert(
-            "Account Created", 
-            "Please check your email to verify your account before logging in."
+            "Account Created",
+            "Please check your email to verify your account before logging in.",
           );
           return null;
         }
