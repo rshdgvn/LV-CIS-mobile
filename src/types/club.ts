@@ -11,6 +11,7 @@ export interface Club {
   created_at: string;
   updated_at: string;
   approved_users_count?: number;
+  pending_applications_count?: number;
 }
 
 export interface ClubPayload {

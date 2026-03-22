@@ -10,7 +10,10 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BackButton } from "@/src/components/common/BackButton"; 
+import { BackButton } from "@/src/components/common/BackButton";
+import { ClubDetailsTab } from "@/src/components/clubs/ClubDetailsTab";
+import { ClubMembersTab } from "@/src/components/clubs/ClubMembersTab";
+import { ClubApplicationsTab } from "@/src/components/clubs/ClubApplicationsTab";
 
 interface Props {
   club: Club | undefined;
@@ -56,7 +59,7 @@ export default function ClubDetailsScreen({ club, isLoading, onBack, onEdit }: P
           <Text className="text-xl font-bold text-gray-900 dark:text-white mt-4 text-center">
             {club.name}
           </Text>
-          
+
           <View className="flex-row items-center mt-2">
             <View className="bg-blue-100 dark:bg-blue-900/30 px-3 py-1 rounded-full mr-2">
               <Text className="text-blue-500 dark:text-blue-400 text-[10px] font-bold uppercase">
@@ -68,7 +71,7 @@ export default function ClubDetailsScreen({ club, isLoading, onBack, onEdit }: P
             </Text>
           </View>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             className="bg-blue-500 w-full py-3.5 rounded-xl items-center flex-row justify-center mt-6 shadow-sm"
             onPress={onEdit}
           >
@@ -78,7 +81,7 @@ export default function ClubDetailsScreen({ club, isLoading, onBack, onEdit }: P
         </View>
 
         <View className="flex-row mt-8 px-5 border-b border-gray-200 dark:border-gray-800">
-          <TouchableOpacity 
+          <TouchableOpacity
             className={`pb-3 mr-6 ${activeTab === "details" ? "border-b-2 border-blue-500" : ""}`}
             onPress={() => setActiveTab("details")}
           >
@@ -87,7 +90,7 @@ export default function ClubDetailsScreen({ club, isLoading, onBack, onEdit }: P
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             className={`pb-3 mr-6 ${activeTab === "members" ? "border-b-2 border-blue-500" : ""}`}
             onPress={() => setActiveTab("members")}
           >
@@ -96,46 +99,24 @@ export default function ClubDetailsScreen({ club, isLoading, onBack, onEdit }: P
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             className={`pb-3 flex-row items-center ${activeTab === "applications" ? "border-b-2 border-blue-500" : ""}`}
             onPress={() => setActiveTab("applications")}
           >
             <Text className={`font-semibold ${activeTab === "applications" ? "text-gray-900 dark:text-white" : "text-gray-400"}`}>
               Applications
             </Text>
-            <View className="w-2 h-2 rounded-full bg-red-500 ml-1 mb-3" />
+            
+            {(club.pending_applications_count || 0) > 0 && (
+              <View className="w-2 h-2 rounded-full bg-red-500 ml-1 mb-3" />
+            )}
           </TouchableOpacity>
         </View>
 
         <View className="px-5 mt-4 mb-10">
-          {activeTab === "details" && (
-            <View className="border border-gray-200 dark:border-gray-800 rounded-2xl p-5 bg-white dark:bg-gray-900 shadow-sm">
-              <View className="flex-row items-center mb-3">
-                <View className="bg-blue-600 rounded-full w-6 h-6 items-center justify-center mr-3">
-                   <Ionicons name="information" size={16} color="white" />
-                </View>
-                <Text className="text-sm font-bold text-gray-900 dark:text-white">
-                  About the club
-                </Text>
-              </View>
-              
-              <Text className="text-gray-500 dark:text-gray-400 text-sm leading-6">
-                {club.description || "No description provided for this club yet."}
-              </Text>
-            </View>
-          )}
-
-          {activeTab === "members" && (
-            <View className="py-10 items-center">
-              <Text className="text-gray-400">Members list will go here!</Text>
-            </View>
-          )}
-
-          {activeTab === "applications" && (
-            <View className="py-10 items-center">
-              <Text className="text-gray-400">Pending applications will go here!</Text>
-            </View>
-          )}
+          {activeTab === "details" && <ClubDetailsTab description={club.description} />}
+          {activeTab === "members" && <ClubMembersTab />}
+          {activeTab === "applications" && <ClubApplicationsTab />}
         </View>
       </ScrollView>
     </SafeAreaView>
